@@ -36,7 +36,10 @@ function App() {
       // state 를 변경 
       setItems(reviews);
     } else {
-      setItems([...items, ...reviews]);
+      // 비동기로 state 를 변결할 때는 잘못된 시점에 값을 변경하는 문제가 생긴다. 
+      // setter 함수에 값이 아니라, callback 을 전달하여 해결하면 좋다. 
+      // prevItems 는 고정된게 아니라, setter 의 파라미터이기 때문에 react 가 현재의 state 값ㅇ르 전달해준다.
+      setItems((prevItems) => ([...prevItems, ...reviews]));
     }
     setOffset(options.offset + reviews.length );
     setHasNext(paging.hasNext);
