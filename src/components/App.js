@@ -64,5 +64,6 @@ function App() {
   );
 }
 // {hasNext && <button onClick={ handleLoadMore }>MORE</button>} hasNext 가 false 이면 rendering 을 되지 않고, hasNext true 이면 뒤의 btn tag 도 true 라서 둘다 출력됨. 
+// 이런 식으로 조건에 따라서 다르게 rendering 하는 것을 조건부 렌더링이라고 한다.
 export default App;
 
