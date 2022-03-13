@@ -16,8 +16,10 @@ function App() {
   const sortedItems = items.sort((a, b) => b[order] - a[order]);
   // hasNext state : 더 보기란이 없을때를 초기값으로
   const [hasNext, setHasNext] = useState(false)
+  // network loading 을 처리할 state
   const [isLoading, setIsLoading] = useState(false)
-  
+  // network error 를 처히라 state 
+  const [loadingError, setLoadingError] = useState(null)
   // button 태그를 통해 최신순이나 별점순을 선택할 수 있게끔 하는 것. // 표현에 주의하자 // 즉시실행함수로 표현해야함.
   const handleNewestClick = () => setOrder('createdAt');
   const handleBestClick = () => setOrder('rating');
@@ -37,9 +39,10 @@ function App() {
     let result;
     try {
       setIsLoading(true)
+      setLoadingError(null)
       result = await getReviews(options);
     } catch (error) {
-      console.log(error);
+      setLoadingError(error)
       return
     } finally {
       setIsLoading(false);
@@ -74,6 +77,7 @@ function App() {
       </div>
       <ReviewList items={sortedItems} onDelete={handleDelete}/>
       {hasNext && <button disabled={isLoading} onClick={ handleLoadMore }>MORE</button>}
+      {loadingError?.message && <span>{loadingError.message}</span>}
     </div>
   );
 }
