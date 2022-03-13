@@ -16,10 +16,16 @@ function App() {
   const sortedItems = items.sort((a, b) => b[order] - a[order]);
   // hasNext state : 더 보기란이 없을때를 초기값으로
   const [hasNext, setHasNext] = useState(false)
+  // network loading 을 처리할 state
+  const [isLoading, setIsLoading] = useState(false)
+  // network error 를 처히라 state 
+  const [loadingError, setLoadingError] = useState(null)
   // button 태그를 통해 최신순이나 별점순을 선택할 수 있게끔 하는 것. // 표현에 주의하자 // 즉시실행함수로 표현해야함.
   const handleNewestClick = () => setOrder('createdAt');
   const handleBestClick = () => setOrder('rating');
   
+
+
   // ReviewList component 에서 handleDeleteClcik 함수는 item 의 id 를 삭제하면, 
   // 그 div 의 id 가 사라진거지, 모든 것이 사라진 것이 아닌데, 원래의 items 의 각 id 와 삭제된 id 가 같지 않으면,
   // filter method 를 통해서 true 인 값만은 callback 하는 함수 를 통해서 삭제한 state 를 nextItems 에 저장하여, browser 에 보여준다. 
@@ -30,8 +36,19 @@ function App() {
   
   // click 하면 network 로 data 를 받아와서 items state 를 변경할 버튼
   const handleLoad = async (options) => {
+    let result;
+    try {
+      setIsLoading(true)
+      setLoadingError(null)
+      result = await getReviews(options);
+    } catch (error) {
+      setLoadingError(error)
+      return
+    } finally {
+      setIsLoading(false);
+    }
     // response body 에 있는 reviews 라는 값을 destructuring 
-    const { reviews, paging } = await getReviews(options);
+    const { reviews, paging } = result;
     if (options.offset === 0) {
       // state 를 변경 
       setItems(reviews);
@@ -59,10 +76,10 @@ function App() {
         <button className='btn' onClick={handleBestClick}>별점순</button>
       </div>
       <ReviewList items={sortedItems} onDelete={handleDelete}/>
-      {hasNext && <button onClick={ handleLoadMore }>MORE</button>}
+      {hasNext && <button disabled={isLoading} onClick={ handleLoadMore }>MORE</button>}
+      {loadingError?.message && <span>{loadingError.message}</span>}
     </div>
   );
 }
 // {hasNext && <button onClick={ handleLoadMore }>MORE</button>} hasNext 가 false 이면 rendering 을 되지 않고, hasNext true 이면 뒤의 btn tag 도 true 라서 둘다 출력됨. 
 export default App;
-
