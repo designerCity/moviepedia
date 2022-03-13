@@ -51,6 +51,9 @@ function App() {
   useEffect(() => {
     handleLoad({ order, offset: 0, limit: LIMIT });
   }, [order]);
+// useEffect 의 두 번째 argument 는 dependency list 이다.
+// 여기에다가 빈 배열을 전달하면 컴포넌트가 렌더링 될 때 콜백 함수를 한 번만 실행합니다.
+
 
   return (
     <div>
