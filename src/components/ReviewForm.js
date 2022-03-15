@@ -19,11 +19,22 @@ function ReviewForm() {
         setContent(e.target.value);
     };
     
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log({
+            title,
+            rating,
+            content,
+        });
+    }
+// html form 태그의 기본동작은 sumbit 버튼을 눌렀을때 입력폼의 값과 함께 getrequest 를 보내는 것이다.,
+// 그래서 event object 에 prventDefault 함수를 사용하는 것이다.
     return (
-    <form className="ReviewForm">
+    <form className="ReviewForm" onSubmit={handleSubmit}>
         <input value={title} onChange={handleTitleChange}/>
         <input type="number" value={rating} onChange={handleRatingChange}/>
         <input value={content} onChange={handleContentChange}/>
+        <button type="submit">확인</button>
     </form>
     );
 }
@@ -33,4 +44,5 @@ function ReviewForm() {
 
 // js, html 에서 onChange 사용자 입력이 끝났을 때 발생하는 이벤트 
 // jsx 에서 onChange event 사용자가 값을 입력할 때마다 onChange event 가 발생한다. 
+// type submit 인 btn 을 만들면 이 버튼을 클릭하면 Form 태그에서 onSubmit 이벤트가 발생한다 
 export default ReviewForm;
