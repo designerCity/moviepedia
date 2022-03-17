@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './ReviewList.css'
+
 function ReviewForm() {
     const [title, setTitle] = useState(''); 
     const [rating, setRating] = useState(0);
@@ -30,12 +31,12 @@ function ReviewForm() {
 // html form 태그의 기본동작은 sumbit 버튼을 눌렀을때 입력폼의 값과 함께 getrequest 를 보내는 것이다.,
 // 그래서 event object 에 prventDefault 함수를 사용하는 것이다.
     return (
-    <form className="ReviewForm" onSubmit={handleSubmit}>
-        <input value={title} onChange={handleTitleChange}/>
-        <input type="number" value={rating} onChange={handleRatingChange}/>
-        <input value={content} onChange={handleContentChange}/>
-        <button type="submit">확인</button>
-    </form>
+        <form className="ReviewForm" onSubmit={handleSubmit}>
+            <input value={title} onChange={handleTitleChange}/>
+            <input type="number" value={rating} onChange={handleRatingChange}/>
+            <input value={content} onChange={handleContentChange}/>
+            <button type="submit">확인</button>
+        </form>
     );
 }
     
