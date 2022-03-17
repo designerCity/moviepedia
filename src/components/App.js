@@ -1,4 +1,4 @@
-\import ReviewList from './ReviewList';
+import ReviewList from './ReviewList';
 import { useEffect, useState } from 'react';
 import { getReviews } from '../api';
 import ReviewForm from './ReviewForm';
