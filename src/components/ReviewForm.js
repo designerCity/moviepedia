@@ -1,40 +1,53 @@
 import { useState } from "react";
+import FileInput from "./FileInput";
 import './ReviewList.css'
-
 function ReviewForm() {
-    const [title, setTitle] = useState(''); 
-    const [rating, setRating] = useState(0);
-    const [content, setContent] = useState('');
+    // const [title, setTitle] = useState(''); 
+    // const [rating, setRating] = useState(0);
+    // const [content, setContent] = useState('');
+    const [values, setValues] = useState({
+        title:'',
+        rating: 0,
+        content: '',
+        imgFile: null,
+    });
+
     // 이벤트 핸들러 함수 
     // input 의 value 가 변경될 때마다 그 값으로 state 로 변경해줄 것이다. 
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
+    // const handleTitleChange = (e) => {
+    //     setTitle(e.target.value);
+    // }
+    // const handleRatingChange = (e) => {
+    //     const nextRating = Number(e.target.value);
+    //     setRating(nextRating);
+    // };
+    // const handleContentChange = (e) => {
+    //     setContent(e.target.value);
+    // };
+    const handleChange = (name, value) => {
+        setValues((preValues) => ({
+            ...preValues,
+            [name]: value, // name 의 값으로 property 로 지정하고 해당하는 values 를 지정해준다. 
+        }))
+    }
+    
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        handleChange(name, value);
     }
 
-    const handleRatingChange = (e) => {
-        const nextRating = Number(e.target.value);
-        setRating(nextRating);
-    };
-    
-    const handleContentChange = (e) => {
-        setContent(e.target.value);
-    };
-    
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log({
-            title,
-            rating,
-            content,
-        });
+        console.log(values);
     }
 // html form 태그의 기본동작은 sumbit 버튼을 눌렀을때 입력폼의 값과 함께 getrequest 를 보내는 것이다.,
-// 그래서 event object 에 prventDefault 함수를 사용하는 것이다.
+// 그래서 event object 에 prventDefault 함 수를 사용하는 것이다.
     return (
         <form className="ReviewForm" onSubmit={handleSubmit}>
-            <input value={title} onChange={handleTitleChange}/>
-            <input type="number" value={rating} onChange={handleRatingChange}/>
-            <input value={content} onChange={handleContentChange}/>
+            <FileInput name="imgFile" value={values.imgFile} onChange={handleChange} />
+            <input name='title' value={values.title} onChange={handleInputChange}/>
+            <textarea type="number" name="rating" value={values.rating} onChange={handleInputChange}/>
+            <input name="content" value={values.content} onChange={handleInputChange}/>
             <button type="submit">확인</button>
         </form>
     );
