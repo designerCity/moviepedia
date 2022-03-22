@@ -11,9 +11,9 @@ function FileInput({ name, value, onChange }) {
 
     return <input type="file" onChange={handleChange} />;
 }
+
 // file input 은 value prop 을 지정할 수 없고, 반드시 비제어 component 로 만들어야 한다.
 // js 에서 갑을 사용자만이 바꿀 수 있게끔 만들기 위함.
 // console 창으로 보는 error 추적 : stack trace 라고 부른다.
-
 
 export default FileInput;
