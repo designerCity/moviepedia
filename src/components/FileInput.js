@@ -18,6 +18,7 @@ function FileInput({ name, value, onChange }) {
     //         console.log(inputRef.current);
     //     }
     // }, [])
+    
     const handleClearClick = () => {
         const inputNode = inputRef.current;
         if (!inputNode) return;
