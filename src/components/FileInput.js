@@ -18,14 +18,12 @@ function FileInput({ name, value, onChange }) {
     //         console.log(inputRef.current);
     //     }
     // }, [])
-    
     const handleClearClick = () => {
         const inputNode = inputRef.current;
         if (!inputNode) return;
 
         inputNode.value = '';
         onChange(name, null)
-        setPreview()
     }
     // 이런 식으로 component 함수에서 외부의 상태를 바꾸는 것을 sideEffect 라고 한다. 이런 sideEffect 를 할때, useEffect 를 많이 활용한다. 
     useEffect(() => {
@@ -33,11 +31,21 @@ function FileInput({ name, value, onChange }) {
         // objectURL 만들기 (이 함수는 문자열을 리턴한다)
         const nextPreview = URL.createObjectURL(value)
         setPreview(nextPreview)
+        // 사이드 이펙트 정리하기 revokeObjectURL 을 이용하여 진행한다. 
+        return () => {
+            setPreview();
+            URL.revokeObjectURL(nextPreview)
+        }
     }, [value])
     return (
         <div>
-            <img src={preview} alt="img 미리보기" height="200px"></img>
-            <input type="file" onChange={handleChange} ref={inputRef} />
+            <img src={preview} alt="img 미리보기"></img>
+            <input 
+                type="file" 
+                accept="image/png, image/jpeg"
+                onChange={handleChange} 
+                ref={inputRef} 
+            />
             {value && <button onClick={handleClearClick}>reset</button>}
         </div>
     );
