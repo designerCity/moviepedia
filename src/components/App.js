@@ -71,6 +71,7 @@ function App() {
     handleLoad({ order, offset: 0, limit: LIMIT });
   }, [order]);
 
+  
   return (
     <div>
       <div>
