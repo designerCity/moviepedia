@@ -84,5 +84,6 @@ function App() {
     </div>
   );
 }
+
 // {hasNext && <button onClick={ handleLoadMore }>MORE</button>} hasNext 가 false 이면 rendering 을 되지 않고, hasNext true 이면 뒤의 btn tag 도 true 라서 둘다 출력됨. 
 export default App;
