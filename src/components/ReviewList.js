@@ -15,15 +15,18 @@ function ReviewListItem({ item, onDelete }) {
     <div className="ReviewListItem">
       <div>
         <img className='ReviewListItem-img' src={item.imgUrl} alt={item.title} />
-        <h1>{item.title}</h1>
-        <Rating value={item.rating}/>
-        <p>{formatDate(item.createdAt)}</p>
-        <p>{item.content}</p>
-        <button onClick={handleDeleteClick}> 삭제 </button>
+        <div>
+          <h1>{item.title}</h1>
+          <Rating value={item.rating}/>
+          <p>{formatDate(item.createdAt)}</p>
+          <p>{item.content}</p>
+          <button onClick={handleDeleteClick}> 삭제 </button>
+        </div>
       </div>
     </div>
   );
 }
+
 // prop 으로 items 라는 배열을 받는 ReviewList component
 // 각 영화의 리스트를 짠 RiviewListItem 을 배열로 다루어서 이 div 의 배열은 만드는 component 이다.
 function ReviewList({ items, onDelete }) {
@@ -40,4 +43,5 @@ function ReviewList({ items, onDelete }) {
     </ul>
   )
 }
+
 export default ReviewList;

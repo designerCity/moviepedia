@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-
 // 파일을 선택하여 console 에 출력해줄 함수 // props 로 name, value, onchange 를 받고,
 function FileInput({ name, value, onChange }) {
     const [preview, setPreview] = useState();
@@ -19,7 +18,6 @@ function FileInput({ name, value, onChange }) {
     //         console.log(inputRef.current);
     //     }
     // }, [])
-    
     const handleClearClick = () => {
         const inputNode = inputRef.current;
         if (!inputNode) return;
