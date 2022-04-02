@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { getReviews } from '../api';
 import ReviewForm from './ReviewForm';
 
-const LIMIT = 6;
-
+const LIMIT = 6;  
 
 // 별점이 높은 순으로 정렬하는 것
 function App() {
@@ -55,7 +54,7 @@ function App() {
       // state 를 변경 
       setItems(reviews);
     } else {
-      setItems([...items, ...reviews]);
+      setItems((prevItems) => [...prevItems, ...reviews]);
     }
     setOffset(options.offset + reviews.length );
     setHasNext(paging.hasNext);
@@ -64,6 +63,10 @@ function App() {
   const handleLoadMore = () => {
     // 객체 안에 있는 것들을 request 로 보냄
     handleLoad({ order, offset: offset, LIMIT });
+  }
+  
+  const handleSubmitSuccess = (review) => {
+    setItems((prevItems) => [review, prevItems])
   }
 
 // handleLoad; 이렇게 작성하면 무한루프에 걸린다. 이럴때 useEffect 함수 사용하여 초기 데이터를 가져올 수 있다. 
@@ -77,7 +80,7 @@ function App() {
         <button className='btn' onClick={handleNewestClick}>최신순</button>
         <button className='btn' onClick={handleBestClick}>별점순</button>
       </div>
-      <ReviewForm />
+      <ReviewForm onSubmitSuccess={handleSubmitSuccess} />
       <ReviewList items={sortedItems} onDelete={handleDelete}/>
       {hasNext && <button disabled={isLoading} onClick={ handleLoadMore }>MORE</button>}
       {loadingError?.message && <span>{loadingError.message}</span>}

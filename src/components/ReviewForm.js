@@ -10,7 +10,7 @@ const INITIAL_VALUES = {
     imgFile: null,
 };
 
-function ReviewForm() {
+function ReviewForm({ onSubmitSuccess }) {
     const [inSubmitting, setIsSubmitting] = useState(false);  // 서버에 POST 할 때 여러 번 눌리지 않게끔 해주는 코드 
     const [submittingError, setSubmittingError] = useState(null);
     
@@ -50,16 +50,20 @@ function ReviewForm() {
         formdata.append('rating', values.rating);
         formdata.append('content', values.content);
         formdata.append('imgFile', values.imgFile);
+
+        let result;
         try {
             setSubmittingError(null);
             setIsSubmitting(true);
-            await createReviews(formdata)
+            result = await createReviews(formdata)
         } catch (error) {
             setSubmittingError(error);
             return;
         } finally{
             setIsSubmitting(false);
         }
+        const { review } = result;
+        onSubmitSuccess(review);
         setValues(INITIAL_VALUES);
     }
     // html form 태그의 기본동작은 sumbit 버튼을 눌렀을때 입력폼의 값과 함께 getrequest 를 보내는 것이다.,
