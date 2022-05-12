@@ -7,6 +7,7 @@ const LIMIT = 6;
 
 
 // 별점이 높은 순으로 정렬하는 것
+
 function App() {
   // mockItems를 여러 부분으로 사용할 수 있게 미리 clone 을 만들어둔다. 
   // items state 는 현재 페이지의 배열을 나타냄.
